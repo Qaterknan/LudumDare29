@@ -42,7 +42,7 @@ Game.prototype.update = function() {
 		this.raf = requestAnimationFrame(function(){
 			_this.update();
 		});
-		this.eventhandler.loop();
+		this.eventhandler.loop(this.world);
 		for(var i=0;i<this.simulationSpeed;i++){
 			this.world.tick(dt/1000);
 		}

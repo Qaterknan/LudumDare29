@@ -37,7 +37,16 @@ $(document).ready(function(){
 		width: 100,
 		height: 100
 	});
-
+	tester.addMouseControl(0, function(x,y){
+		if((x > tester.position.x && x < tester.width+tester.position.x) && (y > tester.position.y && y < tester.width+tester.position.y)){
+			tester.color = "#f00";
+		}
+		else{
+			tester.color = "#000";
+		}
+		});
+	
+	
 	var tester2 = new TesterObject({
 		position: new Vec2(10, 10),
 		width: 100,

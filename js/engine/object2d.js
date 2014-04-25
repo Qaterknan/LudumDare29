@@ -10,6 +10,9 @@ function Object2D(options){
 	this.height = this.options.height === undefined ? 1 : this.options.height;
 	this.parent = null;
 	this.children = [];
+	
+	this.keyboardControls = {};
+	this.mouseControls = {};
 }
 
 Object2D.prototype.tick = function(dt) {
@@ -36,4 +39,48 @@ Object2D.prototype.add = function(child) {
 
 Object2D.prototype.removeChildren = function() {
 	this.children = [];
+};
+	
+Object2D.prototype.handleKeyEvent = function (key, type){
+	if(this.keyboardControls[key]){
+		this.keyboardControls[key].exec(type);
+	}
+	for(var i = 0; i < this.children.length; i++){
+		this.children[i].handleKeyEvent(key, type);
+	};
+};
+
+Object2D.prototype.handleMouseEvent = function (key, type, x, y){
+	if(this.mouseControls[key]){
+		this.mouseControls[key].exec(type,x,y);
+	}
+	for(var i = 0; i < this.children.length; i++){
+		this.children[i].handleMouseEvent(key, type, x-this.position.x, y-this.position.y);
+	};
+};
+
+Object2D.prototype.addMouseControl = function (which, down, up, continuous){
+	 if(!this.mouseControls[ which ])
+                this.mouseControls[ which ] = new Mouse( down, up, continuous );
+        else{
+                this.mouseControls[ which ].add(down, "mousedown");
+                this.mouseControls[ which ].add(up, "mouseup");
+                this.mouseControls[ which ].add(continuous, "continuous");
+        }
+};
+
+Object2D.prototype.addKeyboardControl = function (_key, down, up, continuous){
+	if(typeof(_key) == "string"){
+                key = _key.charCodeAt(0);
+        }
+        else {
+                key = _key;
+        }
+        if(!this.keyboardControls[ key ])
+            this.keyboardControls[ key ] = new Key( down, up, continuous );
+        else{
+            this.keyboardControls[ key ].add(down, "keydown");
+            this.keyboardControls[ key ].add(up, "keyup");
+            this.keyboardControls[ key ].add(continuous, "continuous");
+        }
 };

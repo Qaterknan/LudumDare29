@@ -4,8 +4,8 @@ function Eventhandler( dom ) {
         this.dom = dom;
         this.setOffset();
 
-        this.keyboardControls = {};
-        this.mouseControls = {};
+        this.keys = {};
+        this.mouses = {};
 
         this.mouse = {
             x: 0,
@@ -120,17 +120,31 @@ Eventhandler.prototype.addMouseControl = function(which, down, up, continuous) {
 };
 
 Eventhandler.prototype.keyboardhandler = function(e) {
-        var keycode = e.keyCode,
-                type = e.type;
-        if( this.keyboardControls[ keycode ]){
+        var keycode = e.keyCode;
+	var type = e.type;
+	// var kChar = String.fromCharCode(keycode);
+	if(this.keys[keycode]){
+		if(this.keys[keycode].down)
+			this.keys[keycode].continuous = (type == "keydown");
+		this.keys[keycode].down = (type == "keydown");
+		this.keys[keycode].up = (type == "keyup");
+	}
+	else{
+		this.keys[keycode] = {
+			down : type == "keydown",
+			up : type == "keyup",
+			continuous : false,
+		};
+	}
+	/*if( this.keyboardControls[ keycode ]){
                 if( type == "keydown" && this.keyboardControls[ keycode ].down )
                         return;
                 this.keyboardControls[ keycode ].down = (type == "keydown");
-                this.keyboardControls[ keycode ].exec(type);
+                //this.keyboardControls[ keycode ].exec(type);
         }
          else{
                  console.log([type, keycode, String.fromCharCode(keycode)]);
-         }
+         }*/
 };
 
 Eventhandler.prototype.mousehandler = function(e) {
@@ -167,11 +181,34 @@ Eventhandler.prototype.mousehandler = function(e) {
         }
 
         if(type == "mousemove"){
-            this.updateMouseXY(x,y);
+		this.updateMouseXY(x,y);
+		if(this.mouses[0])
+			this.mouses[0].down = true;
+		else{
+			this.mouses[0] = {
+				down : true,
+				up : false,
+				continuous : false,
+			};
+		}
+		return;
         }
 
-        if( this.mouseControls[ which ] ){
-                if( type == "mousedown" || (this.mouseControls[ which ].down && type == "mousemove") ){
+	if(this.mouses[which]){
+		if(this.mouses[which].down)
+			this.mouses[which].continuous = (type == "mousedown");
+		this.mouses[which].down = (type == "mousedown");
+		this.mouses[which].up = (type == "mouseup");
+	}
+	else{
+		this.mouses[which] = {
+			down : type=="mousedown",
+			up : type == "mouseup",
+			continuous : false,
+		};
+	}
+        /*if( this.mouseControls[ which ] ){
+                if( type == "mousedown" || (this.mouses[ which ].down && type == "mousemove") ){
                         this.mouseControls[ which ].down = true;
                 }
                 else {
@@ -187,7 +224,7 @@ Eventhandler.prototype.mousehandler = function(e) {
         }
         else{
                 // console.log([which,type]);
-        }
+        }*/
 };
 Eventhandler.prototype.updateMouseXY = function(x,y) {
     if(this.mouse.locked){
@@ -203,8 +240,30 @@ Eventhandler.prototype.updateMouseXY = function(x,y) {
         this.mouse.y = y;
     }
 };
-Eventhandler.prototype.loop = function() {
-        for(var k in this.keyboardControls){
+Eventhandler.prototype.loop = function(world) {
+	for(var keyChar in this.keys){
+		if(this.keys[keyChar].up){
+			world.handleKeyEvent(keyChar, "keyup");
+			this.keys[keyChar].up = false;
+		}
+		if(this.keys[keyChar].down)
+			world.handleKeyEvent(keyChar, "keydown");
+		if(this.keys[keyChar].continuous)
+			world.handleKeyEvent(keyChar, "continuous");
+	};
+	
+	for(var mouseID in this.mouses){
+		if(this.mouses[mouseID].up){
+			world.handleMouseEvent(mouseID, "mouseup", this.mouse.x, this.mouse.y);
+			this.mouses[mouseID].up = false;
+		}
+		
+		if(this.mouses[mouseID].down)
+			world.handleMouseEvent(mouseID, "mousedown", this.mouse.x, this.mouse.y);
+		if(this.mouses[mouseID].continuous)
+			world.handleMouseEvent(keyChar, "continuous", this.mouse.x, this.mouse.y);
+	};
+        /*for(var k in this.keyboardControls){
                 if( this.keyboardControls[ k ].down ){
                         this.keyboardControls[ k ].exec("continuous");
                 }
@@ -220,7 +279,7 @@ Eventhandler.prototype.loop = function() {
         if(this.mouse.locked){
             this.mouse.dx = 0;
             this.mouse.dy = 0;
-        }
+        }*/
 };
 
 Eventhandler.prototype.resetControls = function() {
