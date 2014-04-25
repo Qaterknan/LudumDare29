@@ -7,11 +7,13 @@ function Loader(){
 
 	this.imageExts = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
 	this.soundExts = ["wav", "ogg", "mp3", "acc", "webm"];
+	this.jsonExts = ["json"];
 
 	var _this = this;
 }
 
 Loader.prototype.loadOne = function(src, name, callback) {
+	var _this = this;
 	var srcArray = src.split(".");
 	var ext = srcArray[srcArray.length-1];
 
@@ -24,6 +26,21 @@ Loader.prototype.loadOne = function(src, name, callback) {
 		this.cache[name] = new Audio();
 		this.cache[name].onloadeddata = callback;
 		this.cache[name].src = src;
+	}
+	else if(this.jsonExts.indexOf(ext) > -1){
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if ( xhr.readyState === xhr.DONE ) {
+				if ( xhr.status === 200 || xhr.status === 0 ) {
+					if ( xhr.responseText ) {
+						_this.cache[name] = JSON.parse( xhr.responseText );
+						callback();
+					}
+				}
+			}
+		};
+		xhr.open( "GET", src, true );
+		xhr.send( null );
 	}
 
 	return this.cache[name];

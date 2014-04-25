@@ -33,9 +33,9 @@ $(document).ready(function(){
 	game = new Game(320, 320, canvas);
 	game.loader.load({
 		"anim": "animation.png",
-		"test_sound": "test.mp3"
+		"test_sound": "test.mp3",
+		"test_json": "test.json"
 	}, function(){
-		game.loader.get("test_sound").play();
 		var tester = new TesterObject({
 			position: new Vec2(100, 100),
 			width: 120,
