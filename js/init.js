@@ -31,22 +31,28 @@ $(document).ready(function(){
 	$("body").append(canvas);
 
 	game = new Game(320, 320, canvas);
+	game.loader.load({
+		"anim": "animation.png"
+	}, function(){
+		var tester = new TesterObject({
+			position: new Vec2(100, 100),
+			width: 120,
+			height: 148,
+			texture: new Texture(game.loader.get("anim"), {
+				totalFrames: 27,
+				currentAnimation: "walking",
+				animations: {
+					"walking" : {
+						speed: 50,
+						start: 0,
+						end: 26
+					}
+				}
+			})
+		});
+		game.world.add(tester);
 
-	var tester = new TesterObject({
-		position: new Vec2(10, 10),
-		width: 100,
-		height: 100
+		game.start();
 	});
 
-	var tester2 = new TesterObject({
-		position: new Vec2(10, 10),
-		width: 100,
-		height: 10
-	});
-
-	tester.add(tester2);
-
-	game.world.add(tester);
-
-	game.start();
 });

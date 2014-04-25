@@ -8,6 +8,7 @@ function Game(width, height, canvas){
 
 	this.renderer = new CanvasRenderer(this.width, this.height, canvas);
 	this.eventhandler = new Eventhandler(canvas);
+	this.loader = new Loader();
 	this.world = new World(game);
 
 	this.canvas = canvas;
