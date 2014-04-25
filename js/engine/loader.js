@@ -6,6 +6,7 @@ function Loader(){
 	this.loading = false;
 
 	this.imageExts = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
+	this.soundExts = ["wav", "ogg", "mp3", "acc", "webm"];
 
 	var _this = this;
 }
@@ -17,6 +18,11 @@ Loader.prototype.loadOne = function(src, name, callback) {
 	if(this.imageExts.indexOf(ext) > -1){
 		this.cache[name] = new Image();
 		this.cache[name].onload = callback;
+		this.cache[name].src = src;
+	}
+	else if(this.soundExts.indexOf(ext) > -1){
+		this.cache[name] = new Audio();
+		this.cache[name].onloadeddata = callback;
 		this.cache[name].src = src;
 	}
 
