@@ -16,6 +16,7 @@ function Game(width, height, canvas){
 
 	this.lastTime = Date.now();
 
+	// nefunguje < 1
 	this.simulationSpeed = 1;
 
 	this.paused = false;
@@ -48,4 +49,5 @@ Game.prototype.update = function() {
 	}
 	this.renderer.render(this.world);
 	stats.end();
+	// console.log(parent);
 };

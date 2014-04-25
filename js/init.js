@@ -21,10 +21,32 @@ function datguiInit(){
 	return gui;
 }
 
+var game;
+
 $(document).ready(function(){
 	statsInit();
 	// datguiInit();
 
 	var canvas = document.createElement("canvas");
 	$("body").append(canvas);
+
+	game = new Game(320, 320, canvas);
+
+	var tester = new TesterObject({
+		position: new Vec2(10, 10),
+		width: 100,
+		height: 100
+	});
+
+	var tester2 = new TesterObject({
+		position: new Vec2(10, 10),
+		width: 100,
+		height: 10
+	});
+
+	tester.add(tester2);
+
+	game.world.add(tester);
+
+	game.start();
 });

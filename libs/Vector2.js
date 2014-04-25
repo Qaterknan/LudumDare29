@@ -5,16 +5,16 @@
  * @author zz85 / http://www.lab4games.net/zz85/blog
  */
 
-Vector2 = function ( x, y ) {
+Vec2 = function ( x, y ) {
 
 	this.x = x || 0;
 	this.y = y || 0;
 
 };
 
-Vector2.prototype = {
+Vec2.prototype = {
 
-	constructor: Vector2,
+	constructor: Vec2,
 
 	set: function ( x, y ) {
 
@@ -237,8 +237,8 @@ Vector2.prototype = {
 
 			if ( min === undefined ) {
 
-				min = new Vector2();
-				max = new Vector2();
+				min = new Vec2();
+				max = new Vec2();
 
 			}
 
@@ -375,8 +375,16 @@ Vector2.prototype = {
 
 	clone: function () {
 
-		return new Vector2( this.x, this.y );
+		return new Vec2( this.x, this.y );
 
+	},
+
+	getNormal: function () {
+
+		return [
+			new Vec2( -this.y, this.x ),
+			new Vec2( this.y, -this.x )
+		];
 	}
 
 };

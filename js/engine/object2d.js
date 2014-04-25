@@ -1,13 +1,13 @@
 function Object2D(options){
-	options = options === undefined ? {} : options;
+	this.options = options === undefined ? {} : options;
 
-	this.position = options.position === undefined ? new Vec2() : options.position;
-	this.velocity = options.velocity === undefined ? new Vec2() : options.velocity;
-	this.acceleration = options.acceleration === undefined ? new Vec2() : options.acceleration;
-	this.rotation = options.rotation === undefined ? 0 : options.rotation;
-	this.angularVelocity = options.angularVelocity === undefined ? 0 : options.angularVelocity;
-	this.width = options.width === undefined ? 1 : options.width;
-	this.height = options.height === undefined ? 1 : options.height;
+	this.position = this.options.position === undefined ? new Vec2() : this.options.position;
+	this.velocity = this.options.velocity === undefined ? new Vec2() : this.options.velocity;
+	this.acceleration = this.options.acceleration === undefined ? new Vec2() : this.options.acceleration;
+	this.rotation = this.options.rotation === undefined ? 0 : this.options.rotation;
+	this.angularVelocity = this.options.angularVelocity === undefined ? 0 : this.options.angularVelocity;
+	this.width = this.options.width === undefined ? 1 : this.options.width;
+	this.height = this.options.height === undefined ? 1 : this.options.height;
 	this.parent = null;
 	this.children = [];
 }
