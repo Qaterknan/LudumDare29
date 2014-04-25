@@ -52,10 +52,30 @@ $(document).ready(function(){
 		width: 100,
 		height: 10
 	});
+	game.loader.load({
+		"anim": "animation.png",
+		"test_sound": "test.mp3",
+		"test_json": "test.json"
+	}, function(){
+		var tester = new TesterObject({
+			position: new Vec2(100, 100),
+			width: 120,
+			height: 148,
+			texture: new Texture(game.loader.get("anim"), {
+				totalFrames: 27,
+				currentAnimation: "walking",
+				animations: {
+					"walking" : {
+						speed: 50,
+						start: 0,
+						end: 26
+					}
+				}
+			})
+		});
+		game.world.add(tester);
 
-	tester.add(tester2);
+		game.start();
+	});
 
-	game.world.add(tester);
-
-	game.start();
 });

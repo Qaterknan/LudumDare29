@@ -24,7 +24,7 @@ Object2D.prototype.tick = function(dt) {
 
 Object2D.prototype.render = function(ctx) {
 	ctx.save();
-	ctx.translate(this.position.x, this.position.y);
+	ctx.translate(this.position.x - this.width/2, this.position.y - this.height/2);
 	for (var i = 0; i < this.children.length; i++) {
 		var child = this.children[i];
 		child.render(ctx);
