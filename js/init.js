@@ -25,4 +25,6 @@ $(document).ready(function(){
 	statsInit();
 	// datguiInit();
 
+	var canvas = document.createElement("canvas");
+	$("body").append(canvas);
 });
