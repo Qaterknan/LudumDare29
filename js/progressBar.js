@@ -17,8 +17,6 @@ function ProgressBar(options){
 ProgressBar.prototype = Object.create( Object2D.prototype );
 
 ProgressBar.prototype.render = function(ctx) {
-	Object2D.prototype.render.call(this, ctx);
-
 	ctx.save();
 	ctx.translate(this.position.x, this.position.y);
 	ctx.rotate(this.rotation);
@@ -27,6 +25,7 @@ ProgressBar.prototype.render = function(ctx) {
 	ctx.fillStyle = this.value > 0 ? this.fillColor : this.negativeColor;
 	ctx.fillRect(-this.width/2+this.offset, -this.height/2+this.offset,(this.width-2*this.offset)*this.getUpdatedRatio(), this.height-2*this.offset);
 	ctx.restore();
+	Object2D.prototype.render.call(this, ctx);
 };
 
 ProgressBar.prototype.getUpdatedRatio = function (){

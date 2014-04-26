@@ -17,6 +17,9 @@ function Creature(options){
 			this.bottom = object.top;
 		}
 	};
+	
+	this.health = options.health === undefined ? 100 : options.health;
+	this.maxHealth = options.health === undefined ? 100 : options.maxHealth;
 }
 
 Creature.prototype = Object.create( Object2D.prototype );

@@ -80,6 +80,20 @@
 		platform.debug = true;
 		game.world.add(platform);
 
+		var HP = new HealthBar({
+			position : new Vec2(-180,130),
+			width: 150,
+			height : 20,
+			fillColor : new Color("5AF2F0"),
+			hurtColor : new Color("F0FA2D"),
+			healColor : new Color("2DFA64"),
+			bgColor : "black",
+			negativeMax : 0,
+			player : player,
+		});
+		
+		game.world.add(HP);
+		
 		var tester = new TesterObject({
 			position: new Vec2(100, 100),
 			width: 120,

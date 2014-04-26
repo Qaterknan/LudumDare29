@@ -34,5 +34,5 @@ $(document).ready(function(){
 	
 	game.start();
 	
-	game.levelLoad("/js/levels/game.js", function (){});
+	game.levelLoad("/js/levels/menu.js", function (){});
 });
