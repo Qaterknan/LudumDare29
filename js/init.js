@@ -100,6 +100,16 @@ $(document).ready(function(){
 			}
 		});
 		label.add(label2);
+		
+		var text = new GUIText({
+			position : new Vec2(300,300),
+			width : 100,
+			height : 50,
+			color : "#00ff00",
+			text : "Hello, world! How are you? I am fine!",
+			size : 15,
+		});
+		game.world.add(text);
 
 		game.start();
 	});
