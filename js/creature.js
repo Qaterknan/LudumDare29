@@ -100,6 +100,11 @@ Creature.prototype.shoot = function() {
 
 Creature.prototype.takeDamage = function (amount){
 	this.health -= amount;
+	if(this.health <= 0){
+		game.score++;
+		this.parent.remove(this);
+	}
+		
 };
 
 Creature.prototype.heal = function (amount){

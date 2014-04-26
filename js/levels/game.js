@@ -8,7 +8,8 @@
 		"terminal": "/textures/terminal-modra.png",
 		"zdi": "/textures/zdi-modra.png",
 		"pozadi": "/textures/lod-modra.png",
-		// "f": "f.mp3",
+		"genericShot": "/sounds/beep.wav",
+		"10sekund": "/sounds/10sekund.wav",
 	},
 	preload : function (game){
 		
