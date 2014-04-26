@@ -13,6 +13,7 @@ function Object2D(options){
 	this.texture = this.options.texture === undefined ? false : this.options.texture;
 	
 	this.debug = false;
+	this.fixed = false;
 
 	this.parent = null;
 	this.children = [];
@@ -58,7 +59,22 @@ Object2D.prototype.render = function(ctx) {
 	}
 	for (var i = 0; i < this.children.length; i++) {
 		var child = this.children[i];
-		child.render(ctx);
+		if(child.fixed){
+			ctx.save();
+			for(var childIt = child; childIt.parent != null; childIt = childIt.parent){
+				ctx.rotate(-childIt.parent.rotation);
+				ctx.translate(-childIt.parent.position.x, -childIt.parent.position.y);
+				if(childIt.parent instanceof World){
+					ctx.translate(childIt.parent.camera.position.x, childIt.parent.camera.position.y);
+					ctx.scale(1/childIt.parent.camera.scale.x, 1/childIt.parent.camera.scale.y);
+				}
+			};
+			child.render(ctx);
+			ctx.restore();
+		}
+		else{
+			child.render(ctx);
+		}
 	}
 	ctx.restore();
 };

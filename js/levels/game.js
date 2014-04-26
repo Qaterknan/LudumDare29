@@ -154,17 +154,10 @@
 			position : new Vec2(0,-50),
 			width : 50,
 			height : 50,
-			color : "black",
-			onmousein : function (){
-				this.color = "blue";
-			},
-			onmouseout : function (){
-				this.color = "black";
-			},
-			/*texture : new Texture(
+			texture : new Texture(
 				game.loader.get(player.weapon.options.textureName),
 				{scale : new Vec2(3,3)}
-			),*/
+			),
 		});
 		
 		game.world.add(weapon);
