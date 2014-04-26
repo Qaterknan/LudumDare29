@@ -1,3 +1,3 @@
 #!/bin/bash
 killall chrome
-google-chrome --disable-web-security index.html
+google-chrome-stable --disable-web-security index.html

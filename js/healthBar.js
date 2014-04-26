@@ -51,7 +51,7 @@ HealthBar.prototype.getColor = function (){
 	else{
 		mez.copy(this.fillColor);
 	}
-	return mez.getHexString();
+	return "#"+mez.getHexString();
 		
 	/*if(!this.hurt && !this.healed){
 		return this.fillColor.getHexString();

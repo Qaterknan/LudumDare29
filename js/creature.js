@@ -4,7 +4,7 @@ function Creature(options){
 	this.colliding = true;
 
 	this.accel = 700;
-	this.friction = 10;
+	this.damping = 0.9;
 	this.maxSpeed = 300; //5px/s
 	this.midJumpingDownForce = 1000;
 	this.jumpingAccel = 35000;
@@ -17,8 +17,27 @@ function Creature(options){
 	this.onPlatform = false;
 	this.onCollision = function(object) {
 		if(object instanceof Platform){
-			this.onPlatform = true;
-			this.bottom = object.top;
+			
+			// pokud stojí
+			if(object.pointIn(this.position.x, this.position.y+this.height/2)){
+				this.onPlatform = true;
+				this.bottom = object.top;
+			}
+			else {
+				if(object.pointIn(this.position.x, this.position.y-this.height/2)){
+					this.top = object.bottom;
+					this.velocity.y += 100;
+				}
+				else {
+					var dx = this.position.x - object.position.x;
+					if(dx > 0){
+						this.left = object.right;
+					}
+					else {
+						this.right = object.left;
+					}
+				}
+			}
 		}
 	};
 	
@@ -52,10 +71,8 @@ Creature.prototype.tick = function(dt) {
 	this.acceleration.add(this.gravity);
 
 	var velocityLength = this.velocity.length();
-	// this.acceleration.x -= this.velocity.x*velocityLength*this.friction.x*dt;
-	// this.acceleration.y -= this.velocity.y*velocityLength*this.friction.y*dt;
 	if(!this.accelerating){
-		this.velocity.x *= 0.9;
+		this.velocity.x *= this.damping;
 	}
 
 	if(!this.jumping && !this.onPlatform){
@@ -95,6 +112,7 @@ Creature.prototype.shoot = function() {
 	if(this.weapon){
 		game.world.camera.shake(2, 100);
 		this.weapon.shoot(this, this.parent);
+		this.acceleration.add(new Vec2().copy(this.weapon.options.recoil).multiplyScalar(-this.lookingDirection));
 	}
 };
 

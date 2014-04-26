@@ -18,7 +18,7 @@
 		"healthIcon": "./textures/healthIcon.png",
 		
 		"genericShot": "./sounds/beep.wav",
-		
+		// "10sekund": "./sounds/10sekund.wav",
 	},
 	preload : function (game){
 		
@@ -119,6 +119,18 @@
 		});
 		game.world.add(platform2);
 
+		var platform3 = new Platform({
+			position: new Vec2(-200, 0),
+			width: 100,
+			height: 20,
+			texture: new Texture(game.loader.get("zdi"), {
+				width: 100,
+				repeat: true
+			})
+
+		});
+		game.world.add(platform3);
+
 		var zombie = new Zombie({
 			position: new Vec2(40, 0),
 			width: 20,
@@ -147,7 +159,7 @@
 				}
 			})
 		});
-		game.world.add(zombie);
+		// game.world.add(zombie);
 
 		game.world.add(player);
 

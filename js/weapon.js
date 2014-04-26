@@ -49,6 +49,7 @@ weapons = {
 		damage: 5, // per hit
 		rof: 10, // per second
 		inaccuracy: 50,
+		recoil: new Vec2(800, 0),
 		bullet: {
 			speed: 700, // px/s
 			width: 8,
@@ -64,7 +65,7 @@ weapons = {
 						end: 2
 					},
 					"birth" : {
-						delay: 70,
+						delay: 15,
 						start: 0,
 						end: 1,
 						cycle: false
