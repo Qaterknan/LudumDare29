@@ -46,6 +46,8 @@ World.prototype.handleMouseEvent = function(which, type, x,y){
 	}
 	var vec = new Vec2(x-this.width/2+this.camera.position.x,y-this.height/2+this.camera.position.y);
 	vec.rotate(-this.rotation);
+	vec.x = vec.x/this.camera.scale.x;
+	vec.y = vec.y/this.camera.scale.y;
 	for(var i = 0; i < this.children.length; i++){
 		this.children[i].handleMouseEvent(which, type, vec.x, vec.y);
 	};

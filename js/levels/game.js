@@ -1,7 +1,7 @@
 {
 	assets : {
 		"player": "/textures/zombie1.png",
-		"weapon" : "/textures/provizorniZbran.png",
+		"pistol" : "/textures/provizorniZbran.png",
 		"pistol-bullet": "/textures/bullet.png",
 		"terminal": "/textures/terminal-modra.png",
 		"zdi": "/textures/zdi-modra.png",
@@ -120,23 +120,23 @@
 		
 		game.world.add(HP);
 		
-		
-		
-		var tester = new TesterObject({
-			position: new Vec2(100, 100),
-			width: 120,
-			height: 148,
-			texture: new Texture(game.loader.get("anim"), {
-				totalFrames: 27,
-				currentAnimation: "walking",
-				animations: {
-					"walking" : {
-						delay: 50,
-						start: 0,
-						end: 26
-					}
-				}
-			})
+		var weapon = new GUILabel({
+			position : new Vec2(0,-50),
+			width : 50,
+			height : 50,
+			color : "black",
+			onmousein : function (){
+				this.color = "blue";
+			},
+			onmouseout : function (){
+				this.color = "black";
+			},
+			/*texture : new Texture(
+				game.loader.get(player.weapon.options.textureName),
+				{scale : new Vec2(3,3)}
+			),*/
 		});
+		
+		game.world.add(weapon);
 	},
 }
