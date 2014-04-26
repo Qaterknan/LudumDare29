@@ -24,7 +24,7 @@ function Texture(image, options){
 		this.animations = options.animations;
 
 		for(var i in this.animations){
-			this.animations[i].speed = this.animations[i].speed === undefined ? 20 : this.animations[i].speed;
+			this.animations[i].delay = this.animations[i].delay === undefined ? 20 : this.animations[i].delay;
 			this.animations[i].cycle = this.animations[i].cycle === undefined ? true : this.animations[i].cycle;
 			this.animations[i].start = this.animations[i].start === undefined ? 0 : this.animations[i].start;
 			this.animations[i].end = this.animations[i].end === undefined ? 0 : this.animations[i].end;
@@ -53,11 +53,11 @@ Texture.prototype.getCurrentFrameClip = function() {
 	var delta = Date.now() - this.animationStart;
 
 	// pokud se necyklí a má skončit
-	if(delta > (this.frames * this.currentAnimation.speed) && !this.currentAnimation.cycle){
+	if(delta > (this.frames * this.currentAnimation.delay) && !this.currentAnimation.cycle){
 		return this.currentAnimation.end;
 	}
 
-	var frame = this.currentAnimation.start + Math.floor(delta/this.currentAnimation.speed) % this.frames;
+	var frame = this.currentAnimation.start + Math.floor(delta/this.currentAnimation.delay) % this.frames;
 	return {
 		x: frame*this.width,
 		y: 0,

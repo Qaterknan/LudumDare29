@@ -45,7 +45,7 @@ $(document).ready(function(){
 				currentAnimation: "walking",
 				animations: {
 					"walking" : {
-						speed: 50,
+						delay: 50,
 						start: 0,
 						end: 26
 					}
@@ -53,6 +53,14 @@ $(document).ready(function(){
 			})
 		});
 		game.world.add(tester);
+
+		game.world.tick = function(dt){
+			Object2D.prototype.tick.call(this, dt);
+
+			this.camera.position.x += 1;
+			this.camera.scale.x += 0.01;
+			this.camera.scale.y += 0.01;
+		}
 
 		game.start();
 	});

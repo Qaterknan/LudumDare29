@@ -9,7 +9,11 @@ function Game(width, height, canvas){
 	this.renderer = new CanvasRenderer(this.width, this.height, canvas);
 	this.eventhandler = new Eventhandler(canvas);
 	this.loader = new Loader();
-	this.world = new World(game);
+	this.world = new World({
+		width: this.width,
+		height: this.height,
+		game: this
+	});
 
 	this.canvas = canvas;
 
@@ -22,6 +26,11 @@ function Game(width, height, canvas){
 
 	this.paused = false;
 }
+
+// Vypne interpolaci canvasu = lepší pro pixelart
+Game.prototype.disableInterpolation = function() {
+	this.ctx.webkitImageSmoothingEnabled = this.ctx.mozImageSmoothingEnabled = false;
+};
 
 Game.prototype.start = function() {
 	this.paused = false;
