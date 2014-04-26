@@ -24,7 +24,8 @@ Object2D.prototype.tick = function(dt) {
 
 Object2D.prototype.render = function(ctx) {
 	ctx.save();
-	ctx.translate(this.position.x - this.width/2, this.position.y - this.height/2);
+	ctx.translate(this.position.x, this.position.y );
+	ctx.rotate(this.rotation);
 	for (var i = 0; i < this.children.length; i++) {
 		var child = this.children[i];
 		child.render(ctx);
@@ -40,6 +41,12 @@ Object2D.prototype.add = function(child) {
 Object2D.prototype.removeChildren = function() {
 	this.children = [];
 };
+
+Object2D.prototype.pointIn = function (x,y){
+	var vec = new Vec2(x-this.position.x, y-this.position.y);
+	vec.rotate(-this.rotation);
+	return (vec.x >= -this.width/2 && vec.x <= this.width/2) && (vec.y >= -this.height/2 && vec.y <= this.height/2);
+};
 	
 Object2D.prototype.handleKeyEvent = function (key, type){
 	if(this.keyboardControls[key]){
@@ -54,8 +61,10 @@ Object2D.prototype.handleMouseEvent = function (key, type, x, y){
 	if(this.mouseControls[key]){
 		this.mouseControls[key].exec(type,x,y);
 	}
+	var vec = new Vec2(x-this.position.x,y-this.position.y);
+	vec.rotate(-this.rotation);
 	for(var i = 0; i < this.children.length; i++){
-		this.children[i].handleMouseEvent(key, type, x-this.position.x, y-this.position.y);
+		this.children[i].handleMouseEvent(key, type, vec.x, vec.y);
 	};
 };
 

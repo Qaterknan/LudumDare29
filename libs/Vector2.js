@@ -385,6 +385,15 @@ Vec2.prototype = {
 			new Vec2( -this.y, this.x ),
 			new Vec2( this.y, -this.x )
 		];
-	}
+	},
+	
+	rotate : function (theta){
+		var sin = Math.sin(theta);
+		var cos = Math.cos(theta);
+		var nx = this.x*cos-this.y*sin;
+		var ny = this.x*sin+this.y*cos;
+		this.x = nx;
+		this.y = ny;
+	},
 
 };

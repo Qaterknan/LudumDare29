@@ -74,14 +74,32 @@ $(document).ready(function(){
 			})
 		});
 		game.world.add(tester);
-
-		game.world.tick = function(dt){
-			Object2D.prototype.tick.call(this, dt);
-
-			this.camera.position.x += 1;
-			this.camera.scale.x += 0.01;
-			this.camera.scale.y += 0.01;
-		}
+		
+		var label = new GUILabel({
+			position : new Vec2(200,200),
+			width: 50,
+			height: 50,
+			color : "#256521",
+			onmousein: function (){
+				this.color = "#f00";
+			},
+			onmouseout: function(){
+				this.color = "#256521";
+			},
+			rotation : 0.3,
+		});
+		game.world.add(label);
+		
+		var label2 = new GUILabel({
+			position : new Vec2(0,-70),
+			width: 50,
+			height: 50,
+			color : "#482356",
+			onclick : function(){
+				console.log("hurray");
+			}
+		});
+		label.add(label2);
 
 		game.start();
 	});

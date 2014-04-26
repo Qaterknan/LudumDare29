@@ -7,7 +7,6 @@ function Game(width, height, canvas){
 	$(canvas).center();
 
 	this.renderer = new CanvasRenderer(this.width, this.height, canvas);
-	this.eventhandler = new Eventhandler(canvas);
 	this.loader = new Loader();
 	this.tweens = new TweenManager();
 	this.world = new World({
@@ -15,6 +14,7 @@ function Game(width, height, canvas){
 		height: this.height,
 		game: this
 	});
+	this.eventhandler = new Eventhandler(canvas, this.world);
 
 	this.canvas = canvas;
 
@@ -53,7 +53,7 @@ Game.prototype.update = function() {
 		this.raf = requestAnimationFrame(function(){
 			_this.update();
 		});
-		this.eventhandler.loop(this.world);
+		this.eventhandler.loop();
 		for(var i=0;i<this.simulationSpeed;i++){
 			this.world.tick(dt/1000);
 		}
