@@ -101,6 +101,33 @@ $(document).ready(function(){
 		});
 		label.add(label2);
 
+		var ps = new ParticleSystem({
+			position: new Vec2(30, 30),
+			width: 100,
+			height: 100
+		},
+		{
+			size: 2,
+			update: function(){
+				Particle.prototype.update.call(this);
+				this.color.r += utils.randFloat(0.001, 0.05);
+			}
+		},
+		{
+			emiting: true,
+			amount: 10,
+			randomize: {
+				velocity: function(){
+					return new Vec2(utils.randFloatSpread(2), utils.randFloatSpread(2));
+				},
+				life: function(){
+					return utils.randInt(5000, 10000);
+				}
+			}
+		});
+
+		game.world.add(ps);
+
 		game.start();
 	});
 
