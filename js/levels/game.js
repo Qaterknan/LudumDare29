@@ -1,12 +1,14 @@
 {
 	assets : {
-		"player": "/textures/zombie1.png",
+		"player": "/textures/mariner.png",
+		"player-shoot": "/textures/marinershoot.png",
 		"zombie": "/textures/zombie1.png",
 		"pistol" : "/textures/provizorniZbran.png",
 		"pistol-bullet": "/textures/bullet.png",
 		"terminal": "/textures/terminal-modra.png",
 		"zdi": "/textures/zdi-modra.png",
 		"pozadi": "/textures/lod-modra.png",
+		// "f": "f.mp3",
 	},
 	preload : function (game){
 		
@@ -16,10 +18,10 @@
 		var player = new Player({
 			position: new Vec2(0, 0),
 			width: 20,
-			height: 20,
+			height: 40,
 			friction: new Vec2(10, 0),
 			gravity: new Vec2(0, 1000),
-			texture: new Texture(game.loader.get("player"), {
+			texture: new Texture(game.loader.get("player-shoot"), {
 				totalFrames: 4,
 				currentAnimation: "walking",
 				animations: {
@@ -29,15 +31,15 @@
 						end: 0
 					},
 					"walking" : {
-						delay: 250,
+						delay: 150,
 						start: 0,
-						end: 1
-					},
-					"death" : {
-						delay: 400,
-						start: 1,
 						end: 3
-					}
+					},
+					// "death" : {
+					// 	delay: 400,
+					// 	start: 1,
+					// 	end: 3
+					// }
 				}
 			})
 		});

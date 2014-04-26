@@ -24,11 +24,12 @@ function datguiInit(){
 var game;
 
 $(document).ready(function(){
-	statsInit();
 	// datguiInit();
 
 	var canvas = document.createElement("canvas");
 	$("body").append(canvas);
+	
+	statsInit();
 
 	game = new Game(window.innerWidth, window.innerHeight, canvas);
 	

@@ -273,7 +273,7 @@ Eventhandler.prototype.loop = function(world) {
 			this.world.handleKeyEvent(keyChar, "continuous");
 	};
 	for(var which in this.mouses){
-		if(this.mouses[which].continuous){console.log("continuous");
+		if(this.mouses[which].continuous){
 			this.world.handleMouseEvent(which, "continuous", this.mouse.x, this.mouse.y);
 		}
 	};
