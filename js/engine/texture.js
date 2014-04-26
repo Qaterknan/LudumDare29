@@ -5,9 +5,9 @@ function Texture(image, options){
 
 	this.image = image;
 
-	this.stripWidth = this.image.width;
+	this.stripWidth = options.width || this.image.width;
 	this.width = this.stripWidth;
-	this.height = this.image.height;
+	this.height = options.height || this.image.height;
 
 	this.onAnimationEnd = function(){};
 	this.ended = false;
