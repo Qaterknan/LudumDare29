@@ -31,11 +31,11 @@ function GUILabel(options){
 		}
 	});
 	
+	this.logged = false;
 }
 GUILabel.prototype = Object.create( Object2D.prototype );
 
 GUILabel.prototype.render = function (ctx){
-	Object2D.prototype.render.call(this, ctx);
 	ctx.save();
 	ctx.translate(this.position.x, this.position.y);
 	ctx.rotate(this.rotation);
@@ -49,4 +49,5 @@ GUILabel.prototype.render = function (ctx){
 		ctx.fillRect(-this.width/2,-this.height/2,this.width, this.height);
 	}
 	ctx.restore();
+	Object2D.prototype.render.call(this, ctx);
 };

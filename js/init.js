@@ -32,5 +32,7 @@ $(document).ready(function(){
 
 	game = new Game(540, 320, canvas);
 	
-	game.levelLoad("/js/levels/game.js", function (){game.start();});
+	game.start();
+	
+	game.levelLoad("/js/levels/game.js", function (){});
 });

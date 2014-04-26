@@ -84,13 +84,19 @@ Game.prototype.levelLoad = function (src, callback){
 			game.currentLevelSrc = src;
 			game.currentLevel = game.loader.get("level");
 			game.currentLevel.preload(game);
-			game.loader.load(game.currentLevel.assets, function (){
-				for(var name in game.currentLevel.assets){
-					game.currentLevel.assets[name] = game.loader.get(name);
-				};
+			if(Object.keys(game.currentLevel.assets).length){
+				game.loader.load(game.currentLevel.assets, function (){
+					for(var name in game.currentLevel.assets){
+						game.currentLevel.assets[name] = game.loader.get(name);
+					};
+					game.currentLevel.afterload(game);
+					callback();
+				});
+			}
+			else{
 				game.currentLevel.afterload(game);
 				callback();
-			});
+			}
 		});
 	}
 };
