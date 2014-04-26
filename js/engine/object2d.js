@@ -13,7 +13,7 @@ function Object2D(options){
 	this.texture = this.options.texture === undefined ? false : this.options.texture;
 	
 	this.debug = false;
-	this.fixed = false;
+	this.fixed = this.options.fixed === undefined ? false : this.options.fixed;
 
 	this.parent = null;
 	this.children = [];

@@ -30,7 +30,7 @@ $(document).ready(function(){
 	var canvas = document.createElement("canvas");
 	$("body").append(canvas);
 
-	game = new Game(540, 320, canvas);
+	game = new Game(window.innerWidth, window.innerHeight, canvas);
 	
 	game.start();
 	

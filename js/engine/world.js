@@ -10,6 +10,8 @@ World.prototype = Object.create( Object2D.prototype );
 World.prototype.tick = function(dt) {
 	Object2D.prototype.tick.call(this, dt);
 
+	this.camera.tick(dt);
+
 	this.checkChildrenCollisions();
 };
 

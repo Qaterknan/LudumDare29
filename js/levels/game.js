@@ -42,6 +42,9 @@
 			})
 		});
 
+		game.world.camera.follow(player);
+		game.world.camera.scale.set(3,3);
+
 		player.weapon = weapons.pistol;
 
 		player.addKeyboardControl("D", function(){
@@ -144,6 +147,7 @@
 			hurtColor : new Color("F0FA2D"),
 			healColor : new Color("2DFA64"),
 			bgColor : "black",
+			fixed: true,
 			negativeMax : 0,
 			player : player,
 		});

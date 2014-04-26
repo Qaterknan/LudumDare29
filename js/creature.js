@@ -92,8 +92,10 @@ Creature.prototype.tick = function(dt) {
 };
 
 Creature.prototype.shoot = function() {
-	if(this.weapon)
+	if(this.weapon){
+		game.world.camera.shake(2, 100);
 		this.weapon.shoot(this, this.parent);
+	}
 };
 
 Creature.prototype.takeDamage = function (amount){
