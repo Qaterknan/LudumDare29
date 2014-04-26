@@ -1,76 +1,61 @@
 {
 	assets : {
-		"anim": "animation.png",
-		"test_sound": "test.mp3",
-		"test_json": "test.json",
+		
 	},
 	preload : function (game){
-		
-	},
-	afterload : function (game){
-		var tester = new TesterObject({
-			position: new Vec2(100, 100),
-			width: 120,
-			height: 148,
-			texture: new Texture(game.loader.get("anim"), {
-				totalFrames: 27,
-				currentAnimation: "walking",
-				animations: {
-					"walking" : {
-						delay: 50,
-						start: 0,
-						end: 26
-					}
-				}
-			})
-		});
-		game.world.add(tester);
-		
-		var label = new GUILabel({
-			position : new Vec2(200,200),
-			width: 50,
-			height: 50,
-			color : "#256521",
-			onmousein: function (){
-				this.color = "#f00";
-			},
-			onmouseout: function(){
-				this.color = "#256521";
-			},
-			rotation : 0.3,
-		});
-		game.world.add(label);
-		
-		var label2 = new GUILabel({
-			position : new Vec2(0,-70),
-			width: 50,
-			height: 50,
-			color : "#482356",
-			onclick : function(){
-				console.log("hurray");
-			}
-		});
-		label.add(label2);
-		
-		var text = new GUIText({
-			position : new Vec2(300,300),
-			width : 100,
+		var val = "Loading ...";
+		var font = "sans-serif";
+		var size = "40";
+		var ctx = game.renderer.ctx;
+		ctx.font = size+"px "+font;
+		var delka = ctx.measureText(val).width;
+		var loadingText = new GUIText({
+			position : new Vec2(-delka/2,-100),
+			font : font,
+			size : size,
+			text : val,
+			width : 300,
 			height : 50,
-			color : "#00ff00",
-			text : "Hello, world! How are you? I am fine!",
-			size : 15,
 		});
-		game.world.add(text);
+		game.world.add(loadingText);
 		
 		var prog = new ProgressBar({
-			position : new Vec2(-50,-70),
-			width : 100,
+			position : new Vec2(0,0),
+			width : 500,
 			height : 20,
-			value : 50,
-			maxValue : 70,
-			negativeMaxValue : -70,
+			offset : 1,
+			value : game.loader.loaded,
+			maxValue : game.loader.toLoad,
 		});
-		game.world.add(prog);
+		prog.tick = function(dt){
+			ProgressBar.prototype.tick.call(this, dt);
+			this.value = game.loader.loaded;
+		}
 		
+		game.world.add(prog);
+	},
+	afterload : function (game){
+		game.world.children = [];
+		
+		var playText = new GUIText({
+			position : new Vec2(0,0),
+			width : 100,
+			height : 50,
+			text : "PLAY",
+			size : 32,
+			color : "white",
+		});
+		
+		var button = new GUILabel({
+			position : new Vec2(0,-100),
+			width : 110,
+			height : 60,
+			color : "black",
+			onclick : function (){
+				console.log("how about now?");
+			}
+		});
+		button.add(playText);
+		game.world.add(button);
 	},
 }

@@ -30,8 +30,10 @@ $(document).ready(function(){
 	var canvas = document.createElement("canvas");
 	$("body").append(canvas);
 
-	game = new Game(320, 320, canvas);
+	game = new Game(600, 400, canvas);
 	
-	game.levelLoad("/js/levels/menu.js", function (){game.start();});
+	game.start();
+	
+	game.levelLoad("/js/levels/menu.js", function (){});
 	
 });

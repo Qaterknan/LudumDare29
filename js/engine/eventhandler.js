@@ -196,18 +196,19 @@ Eventhandler.prototype.mousehandler = function(e) {
 			this.world.handleMouseEvent(which, "mouseup", this.mouse.x, this.mouse.y);
 			this.mouses[which].up = false;
 		}
-		if(this.mouses[which].down)
+		if(this.mouses[which].down){
 			this.world.handleMouseEvent(which, "mousedown", this.mouse.x, this.mouse.y);
-		if(this.mouses[which].continuous)
-			this.world.handleMouseEvent(which, "continuous", this.mouse.x, this.mouse.y);
+			this.mouses[which].down = false;
+		}
 		return;
         }
 	
 	if(this.mouses[which]){
-		if(this.mouses[which].down)
-			this.mouses[which].continuous = (type == "mousedown");
 		this.mouses[which].down = (type == "mousedown");
 		this.mouses[which].up = (type == "mouseup");
+		if(this.mouses[which].down){
+			this.mouses[which].continuous = true;
+		}
 	}
 	else{
 		this.mouses[which] = {
@@ -220,11 +221,12 @@ Eventhandler.prototype.mousehandler = function(e) {
 	if(this.mouses[which].up){
 		this.world.handleMouseEvent(which, "mouseup", this.mouse.x, this.mouse.y);
 		this.mouses[which].up = false;
+		this.mouses[which].continuous = false;
 	}
-	if(this.mouses[which].down)
+	if(this.mouses[which].down){
 		this.world.handleMouseEvent(which, "mousedown", this.mouse.x, this.mouse.y);
-	if(this.mouses[which].continuous)
-		this.world.handleMouseEvent(which, "continuous", this.mouse.x, this.mouse.y);
+		this.mouses[which].up = false;
+	}
 	
         /*if( this.mouseControls[ which ] ){
                 if( type == "mousedown" || (this.mouses[ which ].down && type == "mousemove") ){
@@ -270,7 +272,11 @@ Eventhandler.prototype.loop = function(world) {
 		if(this.keys[keyChar].continuous)
 			this.world.handleKeyEvent(keyChar, "continuous");
 	};
-	
+	for(var which in this.mouses){
+		if(this.mouses[which].continuous){console.log("continuous");
+			this.world.handleMouseEvent(which, "continuous", this.mouse.x, this.mouse.y);
+		}
+	};
         /*for(var k in this.keyboardControls){
                 if( this.keyboardControls[ k ].down ){
                         this.keyboardControls[ k ].exec("continuous");
