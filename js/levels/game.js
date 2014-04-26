@@ -4,6 +4,7 @@
 		"test_sound": "test.mp3",
 		"test_json": "test.json",
 		"weapon" : "/textures/provizorniZbran.png",
+		"pistol-bullet": "bullet.png",
 	},
 	preload : function (game){
 		
@@ -34,6 +35,8 @@
 			})
 		});
 
+		player.weapon = weapons.pistol;
+
 		player.addKeyboardControl("D", function(){
 			player.accelerate(1);
 		});
@@ -42,6 +45,9 @@
 		});
 		player.addKeyboardControl("W", function(){
 			player.jump();
+		});
+		player.addKeyboardControl(" ", function(){
+			player.shoot();
 		});
 
 		player.debug = true;
@@ -72,13 +78,13 @@
 
 		game.world.add(player);
 		// game.world.add(player2);
-		game.world.add(platform);
-		var platform = new Platform({
+		var platform2 = new Platform({
 			position: new Vec2(200, 70),
-			width: game.width/3,
-			height: 20,
+			width: game.width/7,
+			height: 100,
 		});
-		platform.debug = true;
+		platform2.debug = true;
+		game.world.add(platform2);
 		game.world.add(platform);
 
 		var HP = new HealthBar({

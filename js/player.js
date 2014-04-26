@@ -5,6 +5,7 @@ function Player(options){
 		name: "Handgun",
 	};
 }
+
 Player.prototype = Object.create( Creature.prototype );
 
 Player.prototype.takeDamage = function (amount){

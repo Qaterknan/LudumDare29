@@ -18,11 +18,12 @@ function Object2D(options){
 	this.children = [];
 
 	this.colliding = this.options.colliding === undefined ? false : this.options.colliding;
-	this.onCollision = this.options.onCollision === undefined ? function(){} : this.options.onCollision;
 	
 	this.keyboardControls = {};
 	this.mouseControls = {};
 }
+
+Object2D.prototype.onCollision = function(){};
 
 Object2D.prototype.tick = function(dt) {
 	this.acceleration.add(this.gravity);
@@ -65,6 +66,13 @@ Object2D.prototype.render = function(ctx) {
 Object2D.prototype.add = function(child) {
 	this.children.push(child);
 	child.parent = this;
+};
+
+Object2D.prototype.remove = function(child) {
+	var search = this.children.indexOf(child);
+	if(search > -1){
+		this.children.splice(search, 1);
+	}
 };
 
 Object2D.prototype.removeChildren = function() {

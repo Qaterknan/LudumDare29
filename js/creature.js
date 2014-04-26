@@ -10,6 +10,10 @@ function Creature(options){
 	this.jumpingAccel = 35000;
 	this.accelerating = false;
 
+	this.lookingDirection = 1;
+
+	this.weapon = false;
+
 	this.onPlatform = false;
 	this.onCollision = function(object) {
 		if(object instanceof Platform){
@@ -26,6 +30,8 @@ Creature.prototype = Object.create( Object2D.prototype );
 
 Creature.prototype.accelerate = function(direction) {
 	this.accelerating = true;
+	this.lookingDirection = direction;
+	this.texture.scale.x = direction;
 	if(this.velocity.x * direction > 0){
 		this.acceleration.x += direction*this.accel;
 	}
@@ -83,4 +89,9 @@ Creature.prototype.tick = function(dt) {
 	this.onPlatform = false;
 	this.accelerating = false;
 	this.jumping = false;
+};
+
+Creature.prototype.shoot = function() {
+	if(this.weapon)
+		this.weapon.shoot(this, this.parent);
 };
