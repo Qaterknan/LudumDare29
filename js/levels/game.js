@@ -3,6 +3,7 @@
 		"anim": "animation.png",
 		"test_sound": "test.mp3",
 		"test_json": "test.json",
+		"weapon" : "/textures/provizorniZbran.png",
 	},
 	preload : function (game){
 		
@@ -93,6 +94,8 @@
 		});
 		
 		game.world.add(HP);
+		
+		
 		
 		var tester = new TesterObject({
 			position: new Vec2(100, 100),
