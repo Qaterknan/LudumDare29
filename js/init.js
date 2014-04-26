@@ -110,7 +110,18 @@ $(document).ready(function(){
 			size : 15,
 		});
 		game.world.add(text);
-
+		
+		var prog = new ProgressBar({
+			position : new Vec2(-50,-70),
+			width : 100,
+			height : 20,
+			value : 50,
+			maxValue : 70,
+			negativeMaxValue : -70,
+		});
+		game.world.add(prog);
+		
+		
 		game.start();
 	});
 
