@@ -8,14 +8,19 @@ function Game(width, height, canvas){
 
 	this.renderer = new CanvasRenderer(this.width, this.height, canvas);
 	this.loader = new Loader();
-	this.world = new World(game);
+	this.tweens = new TweenManager();
+	this.world = new World({
+		width: this.width,
+		height: this.height,
+		game: this
+	});
 	this.eventhandler = new Eventhandler(canvas, this.world);
-	
+
 	this.canvas = canvas;
 
 	this.raf = null;
 
-	this.lastTime = Date.now();
+	this.time = Date.now();
 
 	// nefunguje < 1
 	this.simulationSpeed = 1;
@@ -23,9 +28,14 @@ function Game(width, height, canvas){
 	this.paused = false;
 }
 
+// Vypne interpolaci canvasu = lepší pro pixelart
+Game.prototype.disableInterpolation = function() {
+	this.ctx.webkitImageSmoothingEnabled = this.ctx.mozImageSmoothingEnabled = false;
+};
+
 Game.prototype.start = function() {
 	this.paused = false;
-	this.lastTime = Date.now();
+	this.time = Date.now();
 	this.update();
 };
 
@@ -37,8 +47,8 @@ Game.prototype.update = function() {
 	stats.begin();
 	var _this = this;
 	var now = Date.now();
-	var dt = now - this.lastTime;
-	this.lastTime = now;
+	var dt = now - this.time;
+	this.time = now;
 	if(!this.paused){
 		this.raf = requestAnimationFrame(function(){
 			_this.update();
