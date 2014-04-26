@@ -42,6 +42,45 @@ $(document).ready(function(){
 			position: new Vec2(0, 0),
 			width: 120,
 			height: 148,
+			friction: new Vec2(10,10),
+			// gravity: new Vec2(0, 1000),
+			texture: new Texture(game.loader.get("anim"), {
+				totalFrames: 27,
+				currentAnimation: "standing",
+				animations: {
+					"standing" : {
+						delay: 50,
+						start: 0,
+						end: 0
+					},
+					"walking" : {
+						delay: 50,
+						start: 0,
+						end: 26
+					}
+				}
+			})
+		});
+
+		player.addKeyboardControl("D", function(){
+			player.acceleration.x = 5000;
+		});
+		player.addKeyboardControl("A", function(){
+			player.acceleration.x = -5000;
+		});
+		player.addKeyboardControl("W", function(){
+			player.acceleration.y = -5000;
+		});
+		player.addKeyboardControl("S", function(){
+			player.acceleration.y = 5000;
+		});
+
+		player.debug = true;
+
+		var player2 = new Player({
+			position: new Vec2(170, 0),
+			width: 120,
+			height: 148,
 			texture: new Texture(game.loader.get("anim"), {
 				totalFrames: 27,
 				currentAnimation: "walking",
@@ -55,14 +94,16 @@ $(document).ready(function(){
 			})
 		});
 
-		player.addKeyboardControl("D", function(){
-			player.position.x += 3;
+		var platform = new Platform({
+			position: new Vec2(0, 140),
+			width: game.width,
+			height: 20,
 		});
-		player.addKeyboardControl("A", function(){
-			player.position.x -= 3;
-		});
+		platform.debug = true;
 
 		game.world.add(player);
+		// game.world.add(player2);
+		game.world.add(platform);
 
 		game.start();
 	});

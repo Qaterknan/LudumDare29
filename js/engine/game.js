@@ -60,5 +60,4 @@ Game.prototype.update = function() {
 	}
 	this.renderer.render(this.world);
 	stats.end();
-	// console.log(parent);
 };

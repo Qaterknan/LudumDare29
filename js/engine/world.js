@@ -21,6 +21,12 @@ function World(options){
 
 World.prototype = Object.create( Object2D.prototype );
 
+World.prototype.tick = function(dt) {
+	Object2D.prototype.tick.call(this, dt);
+
+	this.checkChildrenCollisions();
+};
+
 World.prototype.render = function(ctx) {
 	ctx.save();
 
