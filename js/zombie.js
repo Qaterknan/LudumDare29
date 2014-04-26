@@ -12,3 +12,29 @@ Zombie.prototype.tick = function(dt) {
 	Creature.prototype.tick.call(this, dt);
 	// console.log("ahoj")
 };
+
+Zombie.prototype.onCollision = function(object) {
+		if(object instanceof Platform){
+			
+			// pokud stojí
+			if(object.pointIn(this.position.x, this.position.y+this.height/2)){
+				this.onPlatform = true;
+				this.bottom = object.top;
+			}
+			else {
+				if(object.pointIn(this.position.x, this.position.y-this.height/2)){
+					this.top = object.bottom;
+					this.velocity.y += 100;
+				}
+				else {
+					var dx = this.position.x - object.position.x;
+					if(dx > 0){
+						this.left = object.right;
+					}
+					else {
+						this.right = object.left;
+					}
+				}
+			}
+		}
+	};

@@ -95,6 +95,7 @@ weapons = {
 		damage: 8, // per hit
 		rof: 30, // per second
 		inaccuracy: 70,
+		recoil : new Vec2(1000,200),
 		bullet: {
 			speed: 800, // px/s
 			width: 2,

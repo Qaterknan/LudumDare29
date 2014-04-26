@@ -57,7 +57,7 @@
 		game.world.camera.follow(player);
 		game.world.camera.scale.set(3,3);
 
-		player.weapon = weapons.pistol;
+		player.weapon = weapons.samopal;
 
 		player.addKeyboardControl("D", function(){
 			player.accelerate(1);
