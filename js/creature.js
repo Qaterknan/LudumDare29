@@ -95,3 +95,11 @@ Creature.prototype.shoot = function() {
 	if(this.weapon)
 		this.weapon.shoot(this, this.parent);
 };
+
+Creature.prototype.takeDamage = function (amount){
+	this.health -= amount;
+};
+
+Creature.prototype.heal = function (amount){
+	this.health += amount;
+};

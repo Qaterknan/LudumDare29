@@ -1,6 +1,7 @@
 {
 	assets : {
 		"player": "/textures/zombie1.png",
+		"zombie": "/textures/zombie1.png",
 		"pistol" : "/textures/provizorniZbran.png",
 		"pistol-bullet": "/textures/bullet.png",
 		"terminal": "/textures/terminal-modra.png",
@@ -16,7 +17,7 @@
 			position: new Vec2(0, 0),
 			width: 20,
 			height: 20,
-			friction: new Vec2(10,0),
+			friction: new Vec2(10, 0),
 			gravity: new Vec2(0, 1000),
 			texture: new Texture(game.loader.get("player"), {
 				totalFrames: 4,
@@ -56,7 +57,7 @@
 			player.shoot();
 		});
 
-		player.debug = false;
+		
 
 		var background = new Background({
 			position: new Vec2(0, 0),
@@ -89,10 +90,8 @@
 				repeat: true
 			})
 		});
-		// platform.debug = true;
 		game.world.add(platform);
 
-		game.world.add(player);
 		var platform2 = new Platform({
 			position: new Vec2(200, 70),
 			width: 100,
@@ -103,8 +102,39 @@
 			})
 
 		});
-		// platform2.debug = true;
 		game.world.add(platform2);
+
+		var zombie = new Zombie({
+			position: new Vec2(40, 0),
+			width: 20,
+			height: 20,
+			friction: new Vec2(10,0),
+			gravity: new Vec2(0, 1000),
+			texture: new Texture(game.loader.get("zombie"), {
+				totalFrames: 4,
+				currentAnimation: "walking",
+				animations: {
+					"standing" : {
+						delay: 50,
+						start: 0,
+						end: 0
+					},
+					"walking" : {
+						delay: 250,
+						start: 0,
+						end: 1
+					},
+					"death" : {
+						delay: 400,
+						start: 1,
+						end: 3
+					}
+				}
+			})
+		});
+		game.world.add(zombie);
+
+		game.world.add(player);
 
 		var HP = new HealthBar({
 			position : new Vec2(-180,130),
