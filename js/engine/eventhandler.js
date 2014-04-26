@@ -1,9 +1,11 @@
-function Eventhandler( dom ) {
+function Eventhandler( dom, world ) {
         var _this = this;
 
         this.dom = dom;
         this.setOffset();
 
+	this.world = world;
+	
         this.keys = {};
         this.mouses = {};
 
@@ -179,7 +181,6 @@ Eventhandler.prototype.mousehandler = function(e) {
             x = e.clientX - this.offset.left;
             y = e.clientY - this.offset.top;
         }
-
         if(type == "mousemove"){
 		this.updateMouseXY(x,y);
 		if(this.mouses[0])
@@ -191,9 +192,17 @@ Eventhandler.prototype.mousehandler = function(e) {
 				continuous : false,
 			};
 		}
+		if(this.mouses[which].up){
+			this.world.handleMouseEvent(which, "mouseup", this.mouse.x, this.mouse.y);
+			this.mouses[which].up = false;
+		}
+		if(this.mouses[which].down)
+			this.world.handleMouseEvent(which, "mousedown", this.mouse.x, this.mouse.y);
+		if(this.mouses[which].continuous)
+			this.world.handleMouseEvent(which, "continuous", this.mouse.x, this.mouse.y);
 		return;
         }
-
+	
 	if(this.mouses[which]){
 		if(this.mouses[which].down)
 			this.mouses[which].continuous = (type == "mousedown");
@@ -207,6 +216,16 @@ Eventhandler.prototype.mousehandler = function(e) {
 			continuous : false,
 		};
 	}
+	
+	if(this.mouses[which].up){
+		this.world.handleMouseEvent(which, "mouseup", this.mouse.x, this.mouse.y);
+		this.mouses[which].up = false;
+	}
+	if(this.mouses[which].down)
+		this.world.handleMouseEvent(which, "mousedown", this.mouse.x, this.mouse.y);
+	if(this.mouses[which].continuous)
+		this.world.handleMouseEvent(which, "continuous", this.mouse.x, this.mouse.y);
+	
         /*if( this.mouseControls[ which ] ){
                 if( type == "mousedown" || (this.mouses[ which ].down && type == "mousemove") ){
                         this.mouseControls[ which ].down = true;
@@ -243,26 +262,15 @@ Eventhandler.prototype.updateMouseXY = function(x,y) {
 Eventhandler.prototype.loop = function(world) {
 	for(var keyChar in this.keys){
 		if(this.keys[keyChar].up){
-			world.handleKeyEvent(keyChar, "keyup");
+			this.world.handleKeyEvent(keyChar, "keyup");
 			this.keys[keyChar].up = false;
 		}
 		if(this.keys[keyChar].down)
-			world.handleKeyEvent(keyChar, "keydown");
+			this.world.handleKeyEvent(keyChar, "keydown");
 		if(this.keys[keyChar].continuous)
-			world.handleKeyEvent(keyChar, "continuous");
+			this.world.handleKeyEvent(keyChar, "continuous");
 	};
 	
-	for(var mouseID in this.mouses){
-		if(this.mouses[mouseID].up){
-			world.handleMouseEvent(mouseID, "mouseup", this.mouse.x, this.mouse.y);
-			this.mouses[mouseID].up = false;
-		}
-		
-		if(this.mouses[mouseID].down)
-			world.handleMouseEvent(mouseID, "mousedown", this.mouse.x, this.mouse.y);
-		if(this.mouses[mouseID].continuous)
-			world.handleMouseEvent(keyChar, "continuous", this.mouse.x, this.mouse.y);
-	};
         /*for(var k in this.keyboardControls){
                 if( this.keyboardControls[ k ].down ){
                         this.keyboardControls[ k ].exec("continuous");
