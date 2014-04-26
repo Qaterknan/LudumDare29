@@ -8,6 +8,7 @@ function Object2D(options){
 	this.angularVelocity = this.options.angularVelocity === undefined ? 0 : this.options.angularVelocity;
 	this.width = this.options.width === undefined ? 1 : this.options.width;
 	this.height = this.options.height === undefined ? 1 : this.options.height;
+	this.texture = this.options.texture === undefined ? false : this.options.texture;
 	this.parent = null;
 	this.children = [];
 	
@@ -24,8 +25,10 @@ Object2D.prototype.tick = function(dt) {
 
 Object2D.prototype.render = function(ctx) {
 	ctx.save();
-	ctx.translate(this.position.x, this.position.y );
+	ctx.translate(this.position.x, this.position.y);
 	ctx.rotate(this.rotation);
+	if(this.texture)
+		this.texture.draw(ctx);
 	for (var i = 0; i < this.children.length; i++) {
 		var child = this.children[i];
 		child.render(ctx);
@@ -47,7 +50,7 @@ Object2D.prototype.pointIn = function (x,y){
 	vec.rotate(-this.rotation);
 	return (vec.x >= -this.width/2 && vec.x <= this.width/2) && (vec.y >= -this.height/2 && vec.y <= this.height/2);
 };
-	
+
 Object2D.prototype.handleKeyEvent = function (key, type){
 	if(this.keyboardControls[key]){
 		this.keyboardControls[key].exec(type);
