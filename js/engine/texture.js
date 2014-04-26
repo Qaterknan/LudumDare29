@@ -9,7 +9,8 @@ function Texture(image, options){
 	this.width = this.stripWidth;
 	this.height = this.image.height;
 
-	this.flip = options.flip === undefined ? false : options.flip;
+	this.onAnimationEnd = function(){};
+	this.ended = false;
 
 	this.clip = options.clip === undefined ? {x: 0, y: 0, width: _this.width, height: _this.height} : options.clip;
 	
@@ -54,6 +55,10 @@ Texture.prototype.getCurrentFrameClip = function() {
 
 	// pokud se necyklí a má skončit
 	if(delta > (this.frames * this.currentAnimation.delay) && !this.currentAnimation.cycle){
+		if(!this.ended){
+			this.ended = true;
+			this.onAnimationEnd();
+		}
 		return this.currentAnimation.end;
 	}
 
@@ -71,8 +76,8 @@ Texture.prototype.draw = function(ctx, width, height) {
 	height = height === undefined ? this.height : height;
 	ctx.save();
 
-	ctx.translate(-this.width/2, -this.height/2);
 	ctx.scale(this.scale.x, this.scale.y);
+	ctx.translate(-this.width/2, -this.height/2);
 
 	ctx.globalAlpha = this.alpha;
 	if(this.repeat){
