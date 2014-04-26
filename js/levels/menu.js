@@ -24,7 +24,7 @@
 				}
 			})
 		});
-		game.world.add(tester);
+		// game.world.add(tester);
 		
 		var label = new GUILabel({
 			position : new Vec2(200,200),

@@ -85,8 +85,8 @@ Object2D.prototype.checkRectangleCollision = function(object) {
 	var thisTop = this.position.y - this.height/2;
 	var thisRight = this.position.x + this.width/2;
 	var thisBottom = this.position.y + this.height/2;
-	var objectLeft = this.position.x - this.width/2;
-	var objectTop = this.position.y - this.height/2;
+	var objectLeft = object.position.x - object.width/2;
+	var objectTop = object.position.y - object.height/2;
 	var objectRight = object.position.x + object.width/2;
 	var objectBottom = object.position.y + object.height/2;
 
@@ -152,3 +152,27 @@ Object2D.prototype.addKeyboardControl = function (_key, down, up, continuous){
             this.keyboardControls[ key ].add(continuous, "continuous");
         }
 };
+
+Object.defineProperty(Object2D.prototype, "bottom", {
+
+    get: function () {
+        return this.position.y + this.height/2;
+    },
+
+    set: function (value) {
+    	this.position.y = value - this.height/2;
+    }
+
+});
+
+Object.defineProperty(Object2D.prototype, "top", {
+
+    get: function () {
+        return this.position.y - this.height/2;
+    },
+
+    set: function (value) {
+    	this.position.y = value + this.height/2;
+    }
+
+});
