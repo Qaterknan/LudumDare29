@@ -8,6 +8,7 @@ function Loader(){
 	this.imageExts = ["jpg", "jpeg", "png", "gif", "bmp", "webp"];
 	this.soundExts = ["wav", "ogg", "mp3", "acc", "webm"];
 	this.jsonExts = ["json"];
+	this.scriptExts = ["js"]
 
 	var _this = this;
 }
@@ -15,7 +16,7 @@ function Loader(){
 Loader.prototype.loadOne = function(src, name, callback) {
 	var _this = this;
 	var srcArray = src.split(".");
-	var ext = srcArray[srcArray.length-1];
+	var ext = srcArray[srcArray.length-1].toLowerCase();
 
 	if(this.imageExts.indexOf(ext) > -1){
 		this.cache[name] = new Image();
@@ -42,6 +43,21 @@ Loader.prototype.loadOne = function(src, name, callback) {
 		xhr.open( "GET", src, true );
 		xhr.send( null );
 	}
+	else if(this.scriptExts.indexOf(ext) > -1){
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if ( xhr.readyState === xhr.DONE ) {
+				if ( xhr.status === 200 || xhr.status === 0 ) {
+					if ( xhr.responseText ) {
+						_this.cache[name] = eval("(function(){return "+ xhr.responseText +";})();");
+						callback();
+					}
+				}
+			}
+		};
+		xhr.open( "GET", src, true );
+		xhr.send( null );
+	}
 
 	return this.cache[name];
 };
@@ -55,8 +71,9 @@ Loader.prototype.load = function(assets, callback) {
 			this.loadOne(assets[i], i, function(){
 				_this.loaded++;
 				if(_this.loaded >= _this.toLoad){
-					this.loading = false;
+					_this.loading = false;
 					callback(_this);
+					_this.loaded = 0;
 				}
 			});
 			this.toLoad++;

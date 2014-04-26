@@ -21,6 +21,9 @@ function Game(width, height, canvas){
 	this.raf = null;
 
 	this.time = Date.now();
+	
+	this.currentLevelSrc = "";
+	this.currentLevel = {};
 
 	// nefunguje < 1
 	this.simulationSpeed = 1;
@@ -60,4 +63,34 @@ Game.prototype.update = function() {
 	}
 	this.renderer.render(this.world);
 	stats.end();
+};
+
+Game.prototype.clear = function() {
+	this.world.children = [];
+	this.world.camera.position.x = this.world.camera.position.y = 0;
+	this.world.camera.scale.x = this.world.camera.scale.y = 1;
+};
+
+Game.prototype.levelLoad = function (src, callback){
+	this.clear();
+	if(src == this.currentLevelSrc){
+		this.currentLevel.preload(this);
+		this.currentLevel.afterload(this);
+	}
+	else{
+		this.loader.load({
+			"level" : src,
+		},function (){
+			game.currentLevelSrc = src;
+			game.currentLevel = game.loader.get("level");
+			game.currentLevel.preload(game);
+			game.loader.load(game.currentLevel.assets, function (){
+				for(var name in game.currentLevel.assets){
+					game.currentLevel.assets[name] = game.loader.get(name);
+				};
+				game.currentLevel.afterload(game);
+				callback();
+			});
+		});
+	}
 };
