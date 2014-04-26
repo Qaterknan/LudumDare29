@@ -63,7 +63,6 @@ Game.prototype.update = function() {
 	}
 	this.renderer.render(this.world);
 	stats.end();
-	// console.log(parent);
 };
 
 Game.prototype.clear = function() {
@@ -101,4 +100,3 @@ Game.prototype.levelLoad = function (src, callback){
 		});
 	}
 };
-

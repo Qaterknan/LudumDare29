@@ -17,6 +17,7 @@
 			width : 300,
 			height : 50,
 		});
+		
 		game.world.add(loadingText);
 		
 		var prog = new ProgressBar({
