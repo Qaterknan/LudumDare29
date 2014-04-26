@@ -14,6 +14,7 @@ Weapon.prototype.shoot = function(holder, parent) {
 	var shootDelay = 1000/this.options.rof;
 	if(this.options.reloads && this.clip <= 0){
 		shootDelay += this.options.reloadDelay;
+		this.clip = -1;
 	}
 	if(now - this.lastShotTime > shootDelay){
 		if(this.options.reloads && this.clip <= 0){
@@ -46,7 +47,7 @@ weapons = {
 		description: "Your grandma's handgun. Pretty much useless.",
 
 		damage: 5, // per hit
-		rof: 20, // per second
+		rof: 10, // per second
 		inaccuracy: 50,
 		bullet: {
 			speed: 700, // px/s
@@ -77,10 +78,55 @@ weapons = {
 				}
 			}
 		},
-		reloads: false,
+		reloads: true,
 		clipSize: 6,
 		reloadDelay: 1000, // ms
 		overheats: false,
 		overheatDelay: 0,
-	})
+	}),
+	samopal: new Weapon({
+		textureName: "samopal",
+		shootingSoundName: "genericShot",//"pistol-shoot",
+		reloadingSoundName: "samopal-reload",
+		name: "Assault Rifle",
+		description: "Useful if you want to take care of yourself, but not when trying to fight your way through a horde of zombies.",
+
+		damage: 8, // per hit
+		rof: 30, // per second
+		inaccuracy: 70,
+		bullet: {
+			speed: 800, // px/s
+			width: 2,
+			height: 2,
+			textureName: "pistol-bullet",
+			textureOptions: {
+				totalFrames: 6,
+				currentAnimation: "birth",
+				animations: {
+					"static" : {
+						delay: 50,
+						start: 2,
+						end: 2
+					},
+					"birth" : {
+						delay: 70,
+						start: 0,
+						end: 1,
+						cycle: false
+					},
+					"destroy" : {
+						delay: 50,
+						start: 2,
+						end: 5,
+						cycle: false
+					},
+				}
+			}
+		},
+		reloads: true,
+		clipSize: 12,
+		reloadDelay: 250, // ms
+		overheats: false,
+		overheatDelay: 0,
+	}),
 };

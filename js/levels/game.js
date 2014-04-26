@@ -1,15 +1,24 @@
 {
 	assets : {
-		"player": "/textures/mariner.png",
-		"player-shoot": "/textures/marinershoot.png",
-		"zombie": "/textures/zombie1.png",
-		"pistol" : "/textures/provizorniZbran.png",
-		"pistol-bullet": "/textures/bullet.png",
-		"terminal": "/textures/terminal-modra.png",
-		"zdi": "/textures/zdi-modra.png",
-		"pozadi": "/textures/lod-modra.png",
-		"genericShot": "/sounds/beep.wav",
-		"10sekund": "/sounds/10sekund.wav",
+		"player": "./textures/mariner.png",
+		"player-shoot": "./textures/marinershoot.png",
+		"zombie": "./textures/zombie1.png",
+		
+		"samopal" : "./textures/weapons/samo.png",
+		"flame" : "./textures/weapons/plamenomet.png",
+		"pistol" : "./textures/weapons/pistole.png",
+		"kulomet" : "./textures/weapons/machinegun.png",
+		"brokovnice" : "./textures/weapons/brok.png",
+		"pistol-bullet": "./textures/bullet.png",
+		
+		"terminal": "./textures/terminal-modra.png",
+		"zdi": "./textures/zdi-modra.png",
+		"pozadi": "./textures/lod-modra.png",
+		
+		"healthIcon": "./textures/healthIcon.png",
+		
+		"genericShot": "./sounds/beep.wav",
+		
 	},
 	preload : function (game){
 		
@@ -143,9 +152,12 @@
 		game.world.add(player);
 
 		var HP = new HealthBar({
-			position : new Vec2(-180,130),
-			width: 150,
-			height : 20,
+			position : new Vec2(
+				-0.30*game.canvas.width,
+				0.37*game.canvas.height),
+			width: 0.25*game.canvas.width,
+			height : game.canvas.height*0.08,
+			offset : 5,
 			fillColor : new Color("5AF2F0"),
 			hurtColor : new Color("F0FA2D"),
 			healColor : new Color("2DFA64"),
@@ -155,18 +167,37 @@
 			player : player,
 		});
 		
+		var ikona = new GUILabel({
+			position : new Vec2(-game.canvas.height*0.32, 0),
+			height : 0,
+			width : 0,
+			texture : new Texture(game.loader.get("healthIcon"), {scale : new Vec2(3,3)}),
+		});
+		
+		HP.add(ikona);
 		game.world.add(HP);
 		
 		var weapon = new GUILabel({
-			position : new Vec2(0,-50),
-			width : 50,
-			height : 50,
+			position : new Vec2(-0.12*game.canvas.width,0.37*game.canvas.height),
+			width : 0,
+			height : 0,
 			texture : new Texture(
 				game.loader.get(player.weapon.options.textureName),
-				{scale : new Vec2(3,3)}
+				{scale : new Vec2(2,2)}
 			),
+			fixed : true,
 		});
-		
 		game.world.add(weapon);
+		var ammo = new AmmoBar({
+			position : new Vec2(0.07*game.canvas.width,0.37*game.canvas.height),
+			width : 0.25*game.canvas.width,
+			height : 0.08*game.canvas.height,
+			fixed: true,
+			offset : 5,
+			fillColor : "#FFD117",
+			weapon : player.weapon,
+		});
+		game.world.add(ammo);
+		
 	},
 }
