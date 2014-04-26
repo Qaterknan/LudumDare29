@@ -1,6 +1,6 @@
 {
 	assets : {
-		"anim": "/textures/animation.png",
+		"anim": "./textures/animation.png",
 		"test_sound": "test.mp3",
 		"test_json": "test.json",
 	},

@@ -200,3 +200,27 @@ Object.defineProperty(Object2D.prototype, "top", {
     }
 
 });
+
+Object.defineProperty(Object2D.prototype, "right", {
+
+    get: function () {
+        return this.position.x + this.width/2;
+    },
+
+    set: function (value) {
+    	this.position.x = value - this.width/2;
+    }
+
+});
+
+Object.defineProperty(Object2D.prototype, "left", {
+
+    get: function () {
+        return this.position.x - this.width/2;
+    },
+
+    set: function (value) {
+    	this.position.x = value + this.width/2;
+    }
+
+});

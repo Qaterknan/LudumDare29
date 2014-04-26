@@ -25,7 +25,7 @@ Loader.prototype.loadOne = function(src, name, callback) {
 	}
 	else if(this.soundExts.indexOf(ext) > -1){
 		this.cache[name] = new Audio();
-		this.cache[name].onloadeddata = callback;
+		$(this.cache[name]).on("loadeddata", callback)
 		this.cache[name].src = src;
 	}
 	else if(this.jsonExts.indexOf(ext) > -1){

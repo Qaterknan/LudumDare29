@@ -53,7 +53,7 @@
 			height : 60,
 			color : "black",
 			onclick : function (){
-				game.levelLoad("/js/levels/game.js", function (){});
+				game.levelLoad("./js/levels/game.js", function (){});
 			}
 		});
 		button.add(playText);
